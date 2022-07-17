@@ -1,3 +1,4 @@
+from curses import curs_set
 import tkinter
 import tkinter.messagebox
 from wave import WAVE_FORMAT_PCM
@@ -37,9 +38,9 @@ class App(customtkinter.CTk):
         self.topmenu = customtkinter.CTkFrame(master = self, height = 70, corner_radius=0, width = 780)
         self.topmenu.grid(row = 0, column = 0, sticky = "nswe")
 
-        self.topmenu.grid_columnconfigure(3, minsize=175)
-        self.topmenu.grid_columnconfigure(1, minsize=175)
-        self.topmenu.grid_columnconfigure(5, minsize=175)
+        self.topmenu.grid_columnconfigure(3, minsize=160)
+        self.topmenu.grid_columnconfigure(1, minsize=160)
+        self.topmenu.grid_columnconfigure(4, minsize=160)
 
         # Create logo
 
@@ -50,26 +51,15 @@ class App(customtkinter.CTk):
 
         # Create menu options
 
-        self.searchbutton = customtkinter.CTkButton(master=self.topmenu,
-                                                text="Explore",
-                                                command=self.searchpanel
-                                        )
-        self.searchbutton.grid(row=0, column=2)
-
-        self.analyzebutton = customtkinter.CTkButton(master=self.topmenu,
-                                                text="Analyze",
-                                                command=self.button_event)
-        self.analyzebutton.grid(row=0, column=3)
-
         self.buildbutton = customtkinter.CTkButton(master=self.topmenu,
                                                 text="Build",
-                                                command=self.button_event)
-        self.buildbutton.grid(row=0, column=4)
+                                                command=self.first_info_page)
+        self.buildbutton.grid(row=0, column=2)
 
         self.darkmodeswitch = customtkinter.CTkSwitch(master=self.topmenu,
                                                 text="Light Mode",
                                                 command=self.change_mode)
-        self.darkmodeswitch.grid(row=0, column=5, pady=10, padx=20, sticky="w")
+        self.darkmodeswitch.grid(row=0, column=6, pady=10, padx=20, sticky="w")
 
         # Create bottom screen initial image
 
@@ -86,65 +76,138 @@ class App(customtkinter.CTk):
     def button_event(self):
         print("Button pressed")
 
-    def searchpanel(self):
+    def first_info_page(self):
         self.bottom.grid_forget()
-        # Remove previous frame
+        self.buildbutton.configure(state=tkinter.DISABLED)
 
-        # Create search panel
+        self.info = customtkinter.CTkFrame(master=self)
+        self.info.grid(row=1, column=0, columnspan=4, rowspan=4, pady=20, padx=20, sticky="nswe")
 
-        self.searchframe = customtkinter.CTkFrame(master = self)
-        self.searchframe.grid(rows = 1, columns = 10, sticky = "nswe", padx = 20, pady = 20)
-        self.searchframe.grid_columnconfigure(1, minsize = 260)
+        self.instructions = customtkinter.CTkFrame(master = self.info)
+        self.instructions.grid(row=1, column=0, columnspan=7, pady=20, padx=20, sticky="nswe")
 
-        self.entry = customtkinter.CTkEntry(master=self.searchframe,
-                                            placeholder_text=" exercise, weightlifting movement, stretch, e.g.",
-                                            width = 500)
-        self.entry.grid(row=0, column=0, pady=20, padx=20, sticky="nswe", columnspan = 8)
+        self.instruction = customtkinter.CTkLabel(master = self.instructions,
+                                                    text = "                                                Please fill this out to tailor your plan for your lifestyle:")
+        self.instruction.grid(row = 0, column = 4, columnspan = 7, padx = 10, pady = 10, sticky = "nswe")
+
+        #self.dayframe = customtkinter.CTkFrame(master = self.info)
+        #self.dayframe.grid(row = 2, column = 4, pady = 10, sticky = "nswe")
+
+        self.days = customtkinter.CTkLabel(master = self.info,
+                                            text = "Days You Can Lift")
+        self.days.grid(row = 2, column = 4, sticky = "nswe", pady = 10)
+
+        self.monday = customtkinter.CTkCheckBox(master = self.info, text = "Monday")
+        self.monday.grid(row = 2, column = 0, sticky = "nswe", pady = 10, padx = 20)
+
+        self.tuesday = customtkinter.CTkCheckBox(master = self.info, text = "Tuesday")
+        self.tuesday.grid(row = 2, column = 1, sticky = "nswe", pady = 10)
+
+        self.wednesday = customtkinter.CTkCheckBox(master = self.info, text = "Wednesday")
+        self.wednesday.grid(row = 2, column = 2, sticky = "nswe", pady = 10)
+
+        self.thursday = customtkinter.CTkCheckBox(master = self.info, text = "Thursday")
+        self.thursday.grid(row = 2, column = 3, sticky = "nswe", pady = 10)
+
+        self.friday = customtkinter.CTkCheckBox(master = self.info, text = "Friday")
+        self.friday.grid(row = 3, column = 0, sticky = "nswe", pady = 10, padx = 20)
+
+        self.saturday = customtkinter.CTkCheckBox(master = self.info, text = "Saturday")
+        self.saturday.grid(row = 3, column = 1, sticky = "nswe", pady = 10)
+
+        self.sunday = customtkinter.CTkCheckBox(master = self.info, text = "Sunday")
+        self.sunday.grid(row = 3, column = 2, sticky = "nswe", pady = 10)
+
+        self.timeslider = customtkinter.CTkSlider(master=self.info,
+                                                from_=1,
+                                                to=4,
+                                                number_of_steps=8)
+        self.timeslider.grid(row=4, column=0, columnspan=4, pady=10, padx=20, sticky="nswe")
+
+        #self.timeframe = customtkinter.CTkFrame(master = self.info)
+        #self.timeframe.grid(row = 4, column = 4, pady = 10, sticky = "nswe")
+
+        self.timelabel = customtkinter.CTkLabel(master = self.info,
+                                                text = "Hours Available")
+        self.timelabel.grid(row = 4, column = 4, pady = 10, sticky = "nswe", columnspan = 1)
+
+        for i in range(4):
+            self.time = customtkinter.CTkLabel(master = self.info, text = str(i + 1))
+            self.time.grid(row = 5, column = i)
+
+        self.instructions2 = customtkinter.CTkFrame(master = self.info)
+        self.instructions2.grid(row=6, column=0, columnspan=7, padx = 10, pady = 10, sticky = "nswe")
+
+        self.instruction2 = customtkinter.CTkLabel(master = self.instructions2, text = "                     Please assess your bodytype. Describe based off your size and body composition:")
+        self.instruction2.grid(row = 6, column = 0, padx = 10, pady = 10, sticky = "nswe")
         
-        # Assign search button to a results display
-        self.searchquerybutton = customtkinter.CTkButton(master=self.searchframe,
-                                                text="Search",
-                                                command=self.searchresults)
-        self.searchquerybutton.grid(row=0, column=9, padx = 20, pady = 20)
+        self.radio_var = tkinter.IntVar(value=0)
 
-        #self.results = customtkinter.CTkFrame(master = self.searchframe, height = 300, width = 350)
-        #self.results.grid(row = 1, column = 0, padx = 10, pady = 10)
+        #self.radioframe = customtkinter.CTkFrame(master = self.info)
+        #self.radioframe.grid(row = 6, column = 4, pady = 10, sticky = "nswe", columnspan = 1)
 
-        #self.display = customtkinter.CTkFrame(master = self.searchframe, height = 300, width = 350)
-        #self.display.grid(row = 1, column = 1, padx = 10, pady = 10)
+        self.submitbutton = customtkinter.CTkButton(master = self.info, text = "Next", command = self.second_info_page) # write command
+        self.submitbutton.grid(row = 7, column = 4, pady = 10, sticky = "nswe", columnspan = 1)
 
-    def searchresults(self):
-        results = exercisedbdata.getSimilarMovements(self.entry.get())
+        self.radio_button_1 = customtkinter.CTkRadioButton(master=self.info,
+                                                           variable=self.radio_var,
+                                                           value=1,
+                                                           text = "Skinny/Lean")
+        self.radio_button_1.grid(row=7, column=2, pady=10, padx = 10, sticky="nswe")
+
+        self.radio_button_2 = customtkinter.CTkRadioButton(master=self.info,
+                                                           variable=self.radio_var,
+                                                           value=2,
+                                                           text = "Skinny/Fat")
+        self.radio_button_2.grid(row=7, column=1, pady=10, sticky="nswe")
+
+        self.radio_button_3 = customtkinter.CTkRadioButton(master=self.info,
+                                                           variable=self.radio_var,
+                                                           value=3,
+                                                           text = "Overweight")
+        self.radio_button_3.grid(row=7, column=3, pady=10, sticky="nswe")
+
+        self.radio_button_4 = customtkinter.CTkRadioButton(master=self.info,
+                                                           variable=self.radio_var,
+                                                           value=4,
+                                                           text = "Semi-Muscular")
+        self.radio_button_4.grid(row=7, column=0, pady=10, sticky="nswe", padx = 20)
+
+
+        self.timeslider.set(2)
+        self.monday.select()
+        self.tuesday.select()
+        self.wednesday.select()
+        self.thursday.select()
+        self.friday.select()
+        self.saturday.select()
+        self.radio_button_4.select()
+    
+    def second_info_page(self):
+        self.info.forget()
+
+        self.info2 = customtkinter.CTkFrame(master = self)
+        self.info2.grid(row=1, column=0, columnspan=7, rowspan=4, pady=20, padx=20, sticky="nswe")
+
+        self.instructions2 = customtkinter.CTkFrame(master = self.info2)
+        self.instructions2.grid(row=1, column=0, columnspan=7, pady=20, padx=20, sticky="nswe")
+
+        self.instruction2 = customtkinter.CTkLabel(master = self.instructions2,
+        text = " Please fill this out to tailor your plan to your specific person. This information will not be stored or distributed.")
+        self.instruction2.grid(row = 0, column = 0, columnspan = 7, padx = 10, pady = 10, sticky = "nswe")
+
+        self.gender = tkinter.IntVar(value=0)
+
+        self.gender_male = customtkinter.CTkRadioButton(master = self.info2, text = "Male", value = 0, variable = self.gender)
+        self.gender_male.grid(row = 2, column = 2, padx = 20, sticky = "nswe")
+
+        self.gender_female = customtkinter.CTkRadioButton(master = self.info2, text = "Female", value = 1, variable=self.gender)
+        self.gender_female.grid(row = 2, column = 3, padx = 20, sticky = "nswe")
+
+        self.ask_gender = customtkinter.CTkLabel(master = self.info2, text = "Select your Gender")
+        self.ask_gender.grid(row = 2, column = 4, padx = 20, sticky = "nswe")
+
         
-        for i in range(len(results)):
-            print("button made")
-
-            columncounter = int(i / 5)
-            if(i > 4):
-                rowcounter = i - 5
-            else:
-                rowcounter = i
-
-            self.resultframe = customtkinter.CTkFrame(master = self.searchframe, width = 100)
-            self.resultframe.grid(row = rowcounter + 1, column = columncounter, pady = 5, padx = 10, sticky = "nswe")
-
-            #self.result = customtkinter.CTkLabel(master=self.resultframe,
-              #                                text=results[i],
-             #                                 text_font=("Helvetica", 16))  # font name and size in px
-            #self.result.grid(row=rowcounter + 1, column=columncounter + 1, pady=5, padx=10)
-
-            self.resultbutton = customtkinter.CTkButton(master=self.resultframe,
-                                                  text=results[i],
-                                                  command=self.testbuttontext(results[i]))
-            self.resultbutton.grid(row = rowcounter + 1, column = columncounter + 1 , padx = 10, pady = 10)
-
-
-        #self.movementdisplay = customtkinter.CTkFrame(master = self.searchframe, width = 240, height = 240)
-        #self.movementdisplay.grid(column = 4, row = 4, padx = 20, pady = 20)
-
-    def testbuttontext(name: str):
-        print(name)
-
 
     def change_mode(self):
         if self.darkmodeswitch.get() == 1:

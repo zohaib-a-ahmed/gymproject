@@ -162,6 +162,7 @@ class App(customtkinter.CTk):
                                                      text="CTkCheckBox")
         self.check_box_2.grid(row=6, column=1, pady=10, padx=20, sticky="w")
 
+
         self.entry = customtkinter.CTkEntry(master=self.frame_right,
                                             width=120,
                                             placeholder_text="CTkEntry")

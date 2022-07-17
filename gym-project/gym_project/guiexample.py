@@ -27,32 +27,18 @@ class App(customtkinter.CTk):
 
         self.protocol("WM_DELETE_WINDOW", self.on_closing)
 
-        # load image with PIL and convert to PhotoImage
-        image = Image.open(PATH + "/1545065344133.jpeg").resize((self.WIDTH, self.HEIGHT))
-        self.bg_image = ImageTk.PhotoImage(image)
+        radio_var = tkinter.IntVar(0)
 
-        self.image_label = tkinter.Label(master=self, image=self.bg_image)
-        self.image_label.place(relx=0.5, rely=0.5, anchor=tkinter.CENTER)
+        def radiobutton_event():
+            print("radiobutton toggled, current value:", radio_var.get())
 
-        self.frame = customtkinter.CTkFrame(master=self,
-                                            width=300,
-                                            height=App.HEIGHT,
-                                            corner_radius=0)
-        self.frame.place(relx=0.5, rely=0.5, anchor=tkinter.CENTER)
+        radiobutton_1 = customtkinter.CTkRadioButton(master=self, text="CTkRadioButton 1",
+                                             command=radiobutton_event, variable= radio_var, value=1)
+        radiobutton_2 = customtkinter.CTkRadioButton(master=self, text="CTkRadioButton 2",
+                                             command=radiobutton_event, variable= radio_var, value=1)
 
-        self.label_1 = customtkinter.CTkLabel(master=self.frame, width=200, height=60,
-                                              fg_color=("gray70", "gray25"), text="CustomTkinter\ninterface example")
-        self.label_1.place(relx=0.5, rely=0.3, anchor=tkinter.CENTER)
-
-        self.entry_1 = customtkinter.CTkEntry(master=self.frame, corner_radius=6, width=200, placeholder_text="username")
-        self.entry_1.place(relx=0.5, rely=0.52, anchor=tkinter.CENTER)
-
-        self.entry_2 = customtkinter.CTkEntry(master=self.frame, corner_radius=6, width=200, show="*", placeholder_text="password")
-        self.entry_2.place(relx=0.5, rely=0.6, anchor=tkinter.CENTER)
-
-        self.button_2 = customtkinter.CTkButton(master=self.frame, text="Login",
-                                                corner_radius=6, command=self.button_event, width=200)
-        self.button_2.place(relx=0.5, rely=0.7, anchor=tkinter.CENTER)
+        radiobutton_1.pack(padx=20, pady=10)
+        radiobutton_2.pack(padx=20, pady=10)
 
     def button_event(self):
         print("Login pressed - username:", self.entry_1.get(), "password:", self.entry_2.get())

@@ -216,7 +216,7 @@ class App(customtkinter.CTk):
 
 
         self.arms = customtkinter.CTkCheckBox(master = self.info2, text = "Arms")
-        self.arms.grid(row = 6, column = 1, padx = 20, pady = 20, sticky = "nswe")
+        self.arms.grid(row = 6, column = 0, padx = 20, pady = 20, sticky = "nswe")
 
         self.chest = customtkinter.CTkCheckBox(master = self.info2, text = "Chest")
         self.chest.grid(row = 6, column = 1, padx = 10, pady = 20, sticky = "nswe")
@@ -224,8 +224,8 @@ class App(customtkinter.CTk):
         self.shoulders = customtkinter.CTkCheckBox(master = self.info2, text = "Shoulders")
         self.shoulders.grid(row = 6, column = 2, padx = 10, pady = 20, sticky = "nswe")
 
-        self.core = customtkinter.CTkCheckBox(master = self.info2, text = "Core")
-        self.core.grid(row = 6, column = 3, padx = 10, pady = 20, sticky = "nswe")
+        self.back = customtkinter.CTkCheckBox(master = self.info2, text = "Back")
+        self.back.grid(row = 6, column = 3, padx = 10, pady = 20, sticky = "nswe")
 
         self.glutes = customtkinter.CTkCheckBox(master = self.info2, text = "Glutes")
         self.glutes.grid(row = 6, column = 4, padx = 10, pady = 20, sticky = "nswe")

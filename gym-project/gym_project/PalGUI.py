@@ -215,22 +215,22 @@ class App(customtkinter.CTk):
         self.instruction3.grid(row = 5, column = 0, columnspan = 7, padx = 10, pady = 10, sticky = "nswe")
 
 
-        self.arms = customtkinter.CTkCheckBox(master = self.info2, text = "Arms", onvalue=0)
+        self.arms = customtkinter.CTkCheckBox(master = self.info2, text = "Arms", onvalue=1)
         self.arms.grid(row = 6, column = 0, padx = 20, pady = 20, sticky = "nswe")
 
         self.chest = customtkinter.CTkCheckBox(master = self.info2, text = "Chest", onvalue=1)
         self.chest.grid(row = 6, column = 1, padx = 10, pady = 20, sticky = "nswe")
 
-        self.shoulders = customtkinter.CTkCheckBox(master = self.info2, text = "Shoulders", onvalue=2)
+        self.shoulders = customtkinter.CTkCheckBox(master = self.info2, text = "Shoulders", onvalue=1)
         self.shoulders.grid(row = 6, column = 2, padx = 10, pady = 20, sticky = "nswe")
 
-        self.back = customtkinter.CTkCheckBox(master = self.info2, text = "Back", onvalue=3)
+        self.back = customtkinter.CTkCheckBox(master = self.info2, text = "Back", onvalue=1)
         self.back.grid(row = 6, column = 3, padx = 10, pady = 20, sticky = "nswe")
 
-        self.glutes = customtkinter.CTkCheckBox(master = self.info2, text = "Glutes", onvalue=4)
+        self.glutes = customtkinter.CTkCheckBox(master = self.info2, text = "Glutes", onvalue=1)
         self.glutes.grid(row = 6, column = 4, padx = 10, pady = 20, sticky = "nswe")
 
-        self.legs = customtkinter.CTkCheckBox(master = self.info2, text = "Legs", onvalue=5)
+        self.legs = customtkinter.CTkCheckBox(master = self.info2, text = "Legs", onvalue=1)
         self.legs.grid(row = 6, column = 5, padx = 20, pady = 20, sticky = "nswe")
 
         self.ending = customtkinter.CTkFrame(master = self.info2)
@@ -239,19 +239,14 @@ class App(customtkinter.CTk):
         self.endingmessage = customtkinter.CTkLabel(master = self.ending, text = "If all this information is correct, select 'Continue'. Enjoy your new routine!")
         self.endingmessage.grid(column = 0, row = 7, padx = 10, pady = 10, sticky = "nswe")
 
-        self.submit = customtkinter.CTkButton(master = self.ending, text = "Continue", command = self.testworkout) # create command
+        self.submit = customtkinter.CTkButton(master = self.ending, text = "Continue", command = self.create_workout) # create command
         self.submit.grid(row = 7, column = 7, padx = 10, pady = 10, sticky = "nswe")
 
-    def testworkout(self):
+    def create_workout(self):
         days = self.monday.get() + self.tuesday.get() + self.wednesday.get() + self.thursday.get() + self.friday.get() + self.saturday.get() + self.sunday.get()
         time = self.timeslider.get()
-        #bodytype = self.radio_var
-        #gender = self.gender
-        #age = self.age_entry.get()
         targets = [self.arms.get(), self.chest.get(), self.shoulders.get(), self.back.get(), self.glutes.get(), self.legs.get()]
         workout = Program(int(self.age_entry.get()), self.gender, days, time, targets, self.radio_var)
-        workout.printWorkout()
-
 
     def change_mode(self):
         if self.darkmodeswitch.get() == 1:

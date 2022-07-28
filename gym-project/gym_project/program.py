@@ -27,14 +27,25 @@ class Program:
         else:
             self.rotation()
 
+        self.print_workout()
+
+
     def full_body_split(self):
         # Returns string of correct format / output
         split = False
-        pass
+        type = self.type_of_workout(False)
 
+        self.workout["Daily Routine"] = "Possible"
+        self.chest(type)
+        self.shoulders(type)
+        self.back(type)
+        self.triceps(type)
+        self.biceps(type)
+        self.legs(type)
+        
     def rotation(self):
         # returns string of correct format / output
-        split = True
+        type = self.type_of_workout(True)
         pass
 
     def type_of_workout(self, split):
@@ -63,9 +74,19 @@ class Program:
                         return 7
                     else:
                         return 8
-
-    def chest(self, split):
-        type = self.type_of_workout(split)
+        else: # Full Body Split
+            if self.gender == 0: # Male
+                if self.freeweight: # Free Weight Use
+                    return 1
+                else:
+                    return 3
+            else: # Female
+                if self.freeweight:
+                    return 5
+                else:
+                    return 7
+ 
+    def chest(self, type):
 
         if(type ==  1):
             self.workout["Incline Dumbbell Press"] = " 4x8"
@@ -79,9 +100,11 @@ class Program:
             self.workout["Incline Dumbbell Press"] = " 3x8"
         else:
             self.workout["Chest Press Machine"] = " 3x10"
+
+        if(self.targets[1] == 1):
+            self.workout["Chest Focused Dips"] = " 3xTo-Failure"
         
-    def back(self, split):
-        type = self.type_of_workout(split)
+    def back(self, type):
 
         if(type ==  1):
             self.workout["Barbell Back Rows"] = " 4x8"
@@ -101,21 +124,25 @@ class Program:
         else:
             self.workout["Machine Back Row"] = " 3x10"
 
-    def shoulders(self, split):
-        type = self.type_of_workout(split)
+        if(self.targets[3] == 1):
+            self.workout["Cable Lat Pushdowns"] = " 3x10"
+
+    def shoulders(self, type):
 
         if((type ==  1) or (type == 2)):
-            self.workout["Lateral Raises"] = " 4x12"
+            self.workout["Dumbbell Lateral Raises"] = " 4x12"
         elif(type == 5):
             self.workout["Dumbbell Shoulder Press"] = " 3x8"
         elif(type == 6):
             self.workout["Dumbbell Shoulder Press"] = " 3x8"
-            self.workout["Lateral Raises"] = " 4x12"
+            self.workout["Dumbbell Lateral Raises"] = " 4x12"
         else:
             self.workout["Machine Shoulder Press"] = " 3x8"
+        
+        if(self.targets[2] == 1):
+            self.workout["Cable Lateral Raises"] = " 3x12"
 
-    def biceps(self, split):
-        type = self.type_of_workout(split)
+    def biceps(self, type):
 
         if(type ==  1):
             self.workout["Hammer Curls"] = " 3x10"
@@ -134,9 +161,11 @@ class Program:
             self.workout["Cable Bar Curls"] = " 3x8"
         else:
             self.workout["Dumbbell Curls"] = " 3x10"
+        
+        if(self.targets[0] == 1):
+            self.workout["Preacher Curl Machine"] = " 3x10"
 
-    def triceps(self, split):
-        type = self.type_of_workout(split)
+    def triceps(self, type):
 
         if(type ==  1):
             self.workout["Tricep Overhead Extensions"] = " 3x12"
@@ -150,9 +179,11 @@ class Program:
             self.workout["Tricep Rope Pushdowns"] = " 3x10"
         else:
             self.workout["Tricep Pushdowns"] = " 3x10"
+        
+        if(self.targets[0] == 1):
+            self.workout["Skullcrusher Tricep Extensions"] = " 3x12"
 
-    def legs(self, split):
-        type = self.type_of_workout(split)
+    def legs(self, type):
 
         if(type ==  1):
             self.workout["Hack Squat"] = " 5x8"
@@ -184,10 +215,10 @@ class Program:
             self.workout["Leg Press Machine"] = " 4x12"
             self.workout["Seated Quad Extension"] = " 3x10"
             self.workout["Seated Hamstring Curl"] = " 3x10"
+        
+        if((self.targets[4] == 1) or (self.targets[5] == 1)):
+            self.workout["Goblet Squats"] = " 3x15"
+        
+    def print_workout(self):
+        print(self.workout)
     
-    def printWorkout(self):
-        for key, value in self.workout.items():
-            print(key + value)
-
-#if __name__ == '__main__':
-    #butt = Program(22, 0, 5, )

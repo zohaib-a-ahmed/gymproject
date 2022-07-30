@@ -34,7 +34,8 @@ class Program:
         # Returns string of correct format / output
         type = self.type_of_workout(False)
         
-        self.workout["Daily Routine"] = " "
+        self.workout["Daily Routine"] = "Do this routine each day:"
+        self.workout["-----------"] = "-----------------------------"
         self.chest(type)
         self.shoulders(type)
         self.back(type)
@@ -46,15 +47,19 @@ class Program:
         # returns string of correct format / output
         type = self.type_of_workout(True)
         
-        self.workout["Rotational"] = " "
-        self.workout["Push Day"] = " "
+        self.workout["Rotational"] = " Rotate along these days:"
+        self.workout["-----------"] = "------------------------------"
+        self.workout["Push Day"] = " Day 1"
+        self.workout["-----------"] = "------------------------------"
         self.chest(type)
         self.shoulders(type)
         self.triceps(type)
-        self.workout["Pull Day"] = " "
+        self.workout["Pull Day"] = " Day 2"
+        self.workout["-----------"] = "------------------------------"
         self.back(type)
         self.biceps(type)
-        self.workout["Leg Day"] = " "
+        self.workout["Leg Day"] = " Day 3"
+        self.workout["-----------"] = "------------------------------"
         self.legs(type)
 
 
@@ -231,4 +236,9 @@ class Program:
         
     def print_workout(self):
         print(self.workout)
+        with open("program.txt", "w") as f:
+            for key, value in self.workout.items():
+                f.write(key)
+                f.write(value)
+                f.write('\n')
     

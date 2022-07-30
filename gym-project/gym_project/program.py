@@ -1,161 +1,225 @@
-import tkinter
-import tkinter.messagebox
-from wave import WAVE_FORMAT_PCM
-import customtkinter
-from numpy import column_stack
-import exercisedbdata
-from PIL import Image, ImageTk
-import os
 
-customtkinter.set_appearance_mode("System")  # Modes: "System" (standard), "Dark", "Light"
-customtkinter.set_default_color_theme("blue")  # Themes: "blue" (standard), "green", "dark-blue"
-customtkinter.set_appearance_mode("dark")
-PATH = os.path.dirname(os.path.realpath(__file__))
+class Program:
 
+    def __init__(self, age, gender, days, hours, targets, bodytype):
 
-class App(customtkinter.CTk):
+        self.gender = gender # 0 or 1, male/female
 
-    WIDTH = 780
-    HEIGHT = 520
-
-    def __init__(self):
-        super().__init__()
-
-        self.title("Progress Pal")
-        self.geometry(f"{App.WIDTH}x{App.HEIGHT}")
-        self.protocol("WM_DELETE_WINDOW", self.on_closing)  # call .on_closing() when app gets closed
-        self.resizable(False, False)
-
-        # ============ create two frames ============
-
-        # configure grid layout (2x1)
-        self.grid_columnconfigure(0, weight=1)
-        self.grid_rowconfigure(1, weight=1)
-
-        # Create top frame
-
-        self.topmenu = customtkinter.CTkFrame(master = self, height = 70, corner_radius=0, width = 780)
-        self.topmenu.grid(row = 0, column = 0, sticky = "nswe")
-
-        self.topmenu.grid_columnconfigure(3, minsize=175)
-        self.topmenu.grid_columnconfigure(1, minsize=175)
-        self.topmenu.grid_columnconfigure(5, minsize=175)
-
-        # Create logo
-
-        self.logo = customtkinter.CTkLabel(master=self.topmenu,
-                                              text="PAL",
-                                              text_font=("Helvetica", -64))  # font name and size in px
-        self.logo.grid(row=0, column=1, pady=10, padx=10)
-
-        # Create menu options
-
-        self.searchbutton = customtkinter.CTkButton(master=self.topmenu,
-                                                text="Explore",
-                                                command=self.searchpanel
-                                        )
-        self.searchbutton.grid(row=0, column=2)
-
-        self.analyzebutton = customtkinter.CTkButton(master=self.topmenu,
-                                                text="Analyze",
-                                                command=self.button_event)
-        self.analyzebutton.grid(row=0, column=3)
-
-        self.buildbutton = customtkinter.CTkButton(master=self.topmenu,
-                                                text="Build",
-                                                command=self.button_event)
-        self.buildbutton.grid(row=0, column=4)
-
-        self.darkmodeswitch = customtkinter.CTkSwitch(master=self.topmenu,
-                                                text="Light Mode",
-                                                command=self.change_mode)
-        self.darkmodeswitch.grid(row=0, column=5, pady=10, padx=20, sticky="w")
-
-        # Create bottom screen initial image
-
-        self.bottom = customtkinter.CTkFrame(master = self)
-        self.bottom.grid(row = 1, column = 0, sticky = "nswe")
-
-        # load image with PIL and convert to PhotoImage
-        image = Image.open(PATH + "/barbellsimple.jpeg").resize((self.WIDTH, self.HEIGHT))
-        self.bg_image = ImageTk.PhotoImage(image)
-
-        self.image_label = tkinter.Label(master=self.bottom, image=self.bg_image)
-        self.image_label.place(relx=0.5, rely=0.5, anchor=tkinter.CENTER)
-
-    def button_event(self):
-        print("Button pressed")
-
-    def searchpanel(self):
-        self.bottom.grid_forget()
-        # Remove previous frame
-
-        # Create search panel
-
-        self.searchframe = customtkinter.CTkFrame(master = self)
-        self.searchframe.grid(rows = 1, columns = 10, sticky = "nswe", padx = 20, pady = 20)
-        self.searchframe.grid_columnconfigure(1, minsize = 260)
-
-        self.entry = customtkinter.CTkEntry(master=self.searchframe,
-                                            placeholder_text=" exercise, weightlifting movement, stretch, e.g.",
-                                            width = 500)
-        self.entry.grid(row=0, column=0, pady=20, padx=20, sticky="nswe", columnspan = 8)
-        
-        # Assign search button to a results display
-        self.searchquerybutton = customtkinter.CTkButton(master=self.searchframe,
-                                                text="Search",
-                                                command=self.searchresults)
-        self.searchquerybutton.grid(row=0, column=9, padx = 20, pady = 20)
-
-        #self.results = customtkinter.CTkFrame(master = self.searchframe, height = 300, width = 350)
-        #self.results.grid(row = 1, column = 0, padx = 10, pady = 10)
-
-        #self.display = customtkinter.CTkFrame(master = self.searchframe, height = 300, width = 350)
-        #self.display.grid(row = 1, column = 1, padx = 10, pady = 10)
-
-    def searchresults(self):
-        results = exercisedbdata.getSimilarMovements(self.entry.get())
-        
-        for i in range(len(results)):
-            print("button made")
-
-            columncounter = int(i / 5)
-            if(i > 4):
-                rowcounter = i - 5
-            else:
-                rowcounter = i
-
-            self.resultframe = customtkinter.CTkFrame(master = self.searchframe, width = 100)
-            self.resultframe.grid(row = rowcounter + 1, column = columncounter, pady = 5, padx = 10, sticky = "nswe")
-
-            #self.result = customtkinter.CTkLabel(master=self.resultframe,
-              #                                text=results[i],
-             #                                 text_font=("Helvetica", 16))  # font name and size in px
-            #self.result.grid(row=rowcounter + 1, column=columncounter + 1, pady=5, padx=10)
-
-            self.resultbutton = customtkinter.CTkButton(master=self.resultframe,
-                                                  text=results[i],
-                                                  command=self.testbuttontext(results[i]))
-            self.resultbutton.grid(row = rowcounter + 1, column = columncounter + 1 , padx = 10, pady = 10)
-
-
-        #self.movementdisplay = customtkinter.CTkFrame(master = self.searchframe, width = 240, height = 240)
-        #self.movementdisplay.grid(column = 4, row = 4, padx = 20, pady = 20)
-
-    def testbuttontext(name: str):
-        print(name)
-
-
-    def change_mode(self):
-        if self.darkmodeswitch.get() == 1:
-            customtkinter.set_appearance_mode("light")
+        if(hours <= 1.5): # denote short/long workout
+            self.time = 0 # short
         else:
-            customtkinter.set_appearance_mode("dark")
+            self.time = 1 # long
 
-    def on_closing(self, event=0):
-        self.destroy()
+        self.targets = targets # List of target areas; 0:Arms, 1:Chest, 2:Shoulders, 3:Back, 4:Glutes, 5:Legs
+
+        self.bodytype = bodytype # 1:Skinny/Lean, 2:Skinny/Fat, 3:Overweight, 4:Semi-Muscular
+        # To incorporate cardio or not
+
+        if(age > 30):
+            self.freeweight = False
+        else:
+            self.freeweight = True
+
+        self.workout = {}
+
+        if(days < 3): # determine split
+            self.full_body_split()
+        else:
+            self.rotation()
+
+        self.print_workout()
 
 
-if __name__ == "__main__":
-    app = App()
-    app.mainloop()
+    def full_body_split(self):
+        # Returns string of correct format / output
+        split = False
+        type = self.type_of_workout(False)
+        
+        print(type)
+        self.workout["Daily Routine"] = "Possible"
+        self.chest(type)
+        self.shoulders(type)
+        self.back(type)
+        self.triceps(type)
+        self.biceps(type)
+        self.legs(type)
+        
+    def rotation(self):
+        # returns string of correct format / output
+        type = self.type_of_workout(True)
+        pass
+
+    def type_of_workout(self, split):
+        # Split information type into 8 categories to define workouts
+
+        if split: # Rotational Split
+            if(self.gender == 0): # Male
+                if self.freeweight: # Free Weight Use
+                    if self.time == 0: # Short Workout
+                        return 1
+                    else:
+                        return 2 # Long Workout
+                else:
+                    if self.time == 0:
+                        return 3
+                    else:
+                        return 4
+            else: # Female
+                if self.freeweight:
+                    if self.time == 0:
+                        return 5
+                    else:
+                        return 6
+                else:
+                    if self.time == 0:
+                        return 7
+                    else:
+                        return 8
+        else: # Full Body Split
+            if(self.gender == 0): # Male
+                if self.freeweight: # Free Weight Use
+                    return 1
+                else:
+                    return 3
+            else: # Female
+                if self.freeweight:
+                    return 5
+                else:
+                    return 7
+ 
+    def chest(self, type):
+
+        if(type ==  1):
+            self.workout["Incline Dumbbell Press"] = " 4x8"
+        elif(type ==  2):
+            self.workout["Bench Press"] = " 4x10/8/6/4"
+            self.workout["Incline Dumbbell Press"] = " 4x8"
+        elif(type == 5):
+            self.workout["Dumbbell Press"] = " 3x8"
+        elif(type == 6):
+            self.workout["Dumbbell Press"] = " 3x8"
+            self.workout["Incline Dumbbell Press"] = " 3x8"
+        else:
+            self.workout["Chest Press Machine"] = " 3x10"
+
+        if(self.targets[1] == 1):
+            self.workout["Chest Focused Dips"] = " 3xTo-Failure"
+        
+    def back(self, type):
+
+        if(type ==  1):
+            self.workout["Barbell Back Rows"] = " 4x8"
+            self.workout["Lat Pulldowns"] = " 3x12"
+        elif(type ==  2):
+            self.workout["Barbell Back Rows"] = " 4x8"
+            self.workout["Lat Pulldowns"] = " 3x12"
+            self.workout["Pull Ups"] = " 3xTo-Failure"
+        elif(type == 5):
+            self.workout["Cable Back Row"] = " 3x8"
+        elif(type == 6):
+            self.workout["Cable Back Row"] = " 3x8"
+            self.workout["Lat Pulldown"] = " 3x8"
+        elif((type == 4) or (type == 8)):
+            self.workout["Machine Back Row"] = " 3x10"
+            self.workout["Machine Lat Pulldown"] = " 3x10"
+        else:
+            self.workout["Machine Back Row"] = " 3x10"
+
+        if(self.targets[3] == 1):
+            self.workout["Cable Lat Pushdowns"] = " 3x10"
+
+    def shoulders(self, type):
+
+        if((type ==  1) or (type == 2)):
+            self.workout["Dumbbell Lateral Raises"] = " 4x12"
+        elif(type == 5):
+            self.workout["Dumbbell Shoulder Press"] = " 3x8"
+        elif(type == 6):
+            self.workout["Dumbbell Shoulder Press"] = " 3x8"
+            self.workout["Dumbbell Lateral Raises"] = " 4x12"
+        else:
+            self.workout["Machine Shoulder Press"] = " 3x8"
+        
+        if(self.targets[2] == 1):
+            self.workout["Cable Lateral Raises"] = " 3x12"
+
+    def biceps(self, type):
+
+        if(type ==  1):
+            self.workout["Hammer Curls"] = " 3x10"
+            self.workout["Cable Bar Curls"] = " 3x10"
+        elif(type ==  2):
+            self.workout["Hammer Curls"] = " 3x10"
+            self.workout["EZ Bar Curls"] = " 3x10"
+            self.workout["Cable Bar Curls"] = " 3x12"
+        elif(type == 5):
+            self.workout["Hammer Curls"] = " 3x10"
+        elif(type == 6):
+            self.workout["Hammer Curls"] = " 3x10"
+            self.workout["Dumbbell Curls"] = " 3x10"
+        elif((type == 4) or (type == 8)):
+            self.workout["Dumbbell Curls"] = " 3x8"
+            self.workout["Cable Bar Curls"] = " 3x8"
+        else:
+            self.workout["Dumbbell Curls"] = " 3x10"
+        
+        if(self.targets[0] == 1):
+            self.workout["Preacher Curl Machine"] = " 3x10"
+
+    def triceps(self, type):
+
+        if(type ==  1):
+            self.workout["Tricep Overhead Extensions"] = " 3x12"
+            self.workout["Tricep Rope Pushdowns"] = " 3x10"
+        elif(type ==  2):
+            self.workout["Tricep Overhead Extensions"] = " 3x12"
+            self.workout["Tricep Rope Pushdowns"] = " 3x10"
+            self.workout["Single Arm Bent-Over Tricep Extensions"] = " 3x10"
+        elif(type == 6):
+            self.workout["Tricep Pushdowns"] = " 3x12"
+            self.workout["Tricep Rope Pushdowns"] = " 3x10"
+        else:
+            self.workout["Tricep Pushdowns"] = " 3x10"
+        
+        if(self.targets[0] == 1):
+            self.workout["Skullcrusher Tricep Extensions"] = " 3x12"
+
+    def legs(self, type):
+
+        if(type ==  1):
+            self.workout["Hack Squat"] = " 5x8"
+            self.workout["Hamstring Curls"] = " 3x15"
+            self.workout["Calf Raises"] = " 4x15"
+            self.workout["Quad Extensions"] = " 3x12"
+        elif(type ==  2):
+            self.workout["Barbell Back Squat"] = " 4x12/10/8/10"
+            self.workout["Bulgarian Single Leg Split Squat"] = " 3x12"
+            self.workout["Leg Press"] = " 3x20"
+            self.workout["Hamstring Curls"] = " 3x15"
+            self.workout["Calf Raises"] = " 4x15"
+            self.workout["Quad Extensions"] = " 3x12"
+        elif(type == 5):
+            self.workout["Barbell Back Squat"] = " 4x10/8/8/10"
+            self.workout["Hip Thrusts"] = " 4x12"
+            self.workout["Hamstring Curls"] = " 3x15"
+            self.workout["Calf Raises"] = " 4x15"
+            self.workout["Quad Extensions"] = " 3x12"
+        elif(type == 6):
+            self.workout["Barbell Back Squat"] = " 4x10/8/8/10"
+            self.workout["Hip Thrusts"] = " 4x12"
+            self.workout["Bulgarian Single Leg Split Squat"] = " 3x12"
+            self.workout["Leg Press"] = " 3x20"
+            self.workout["Hamstring Curls"] = " 3x15"
+            self.workout["Calf Raises"] = " 4x15"
+            self.workout["Quad Extensions"] = " 3x12"
+        else:
+            self.workout["Leg Press Machine"] = " 4x12"
+            self.workout["Seated Quad Extension"] = " 3x10"
+            self.workout["Seated Hamstring Curl"] = " 3x10"
+        
+        if((self.targets[4] == 1) or (self.targets[5] == 1)):
+            self.workout["Goblet Squats"] = " 3x15"
+        
+    def print_workout(self):
+        print(self.workout)
+    

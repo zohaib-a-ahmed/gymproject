@@ -246,7 +246,7 @@ class App(customtkinter.CTk):
         days = self.monday.get() + self.tuesday.get() + self.wednesday.get() + self.thursday.get() + self.friday.get() + self.saturday.get() + self.sunday.get()
         time = self.timeslider.get()
         targets = [self.arms.get(), self.chest.get(), self.shoulders.get(), self.back.get(), self.glutes.get(), self.legs.get()]
-        workout = Program(int(self.age_entry.get()), self.gender, days, time, targets, self.radio_var)
+        workout = Program(int(self.age_entry.get()), self.gender.get(), days, time, targets, self.radio_var.get())
 
     def change_mode(self):
         if self.darkmodeswitch.get() == 1:

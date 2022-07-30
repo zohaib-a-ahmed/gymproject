@@ -5,7 +5,7 @@ class Program:
 
         self.gender = gender # 0 or 1, male/female
 
-        if(hours <= 1): # denote short/long workout
+        if(hours <= 1.5): # denote short/long workout
             self.time = 0 # short
         else:
             self.time = 1 # long
@@ -34,7 +34,8 @@ class Program:
         # Returns string of correct format / output
         split = False
         type = self.type_of_workout(False)
-
+        
+        print(type)
         self.workout["Daily Routine"] = "Possible"
         self.chest(type)
         self.shoulders(type)
@@ -52,7 +53,7 @@ class Program:
         # Split information type into 8 categories to define workouts
 
         if split: # Rotational Split
-            if self.gender == 0: # Male
+            if(self.gender == 0): # Male
                 if self.freeweight: # Free Weight Use
                     if self.time == 0: # Short Workout
                         return 1
@@ -75,7 +76,7 @@ class Program:
                     else:
                         return 8
         else: # Full Body Split
-            if self.gender == 0: # Male
+            if(self.gender == 0): # Male
                 if self.freeweight: # Free Weight Use
                     return 1
                 else:

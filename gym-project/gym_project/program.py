@@ -32,11 +32,9 @@ class Program:
 
     def full_body_split(self):
         # Returns string of correct format / output
-        split = False
         type = self.type_of_workout(False)
         
-        print(type)
-        self.workout["Daily Routine"] = "Possible"
+        self.workout["Daily Routine"] = " "
         self.chest(type)
         self.shoulders(type)
         self.back(type)
@@ -47,7 +45,18 @@ class Program:
     def rotation(self):
         # returns string of correct format / output
         type = self.type_of_workout(True)
-        pass
+        
+        self.workout["Rotational"] = " "
+        self.workout["Push Day"] = " "
+        self.chest(type)
+        self.shoulders(type)
+        self.triceps(type)
+        self.workout["Pull Day"] = " "
+        self.back(type)
+        self.biceps(type)
+        self.workout["Leg Day"] = " "
+        self.legs(type)
+
 
     def type_of_workout(self, split):
         # Split information type into 8 categories to define workouts

@@ -243,10 +243,24 @@ class App(customtkinter.CTk):
         self.submit.grid(row = 7, column = 7, padx = 10, pady = 10, sticky = "nswe")
 
     def create_workout(self):
+        self.success_screen()
         days = self.monday.get() + self.tuesday.get() + self.wednesday.get() + self.thursday.get() + self.friday.get() + self.saturday.get() + self.sunday.get()
         time = self.timeslider.get()
         targets = [self.arms.get(), self.chest.get(), self.shoulders.get(), self.back.get(), self.glutes.get(), self.legs.get()]
         workout = Program(int(self.age_entry.get()), self.gender.get(), days, time, targets, self.radio_var.get())
+
+    def success_screen(self):
+        self.info2.forget()
+        
+        self.success = customtkinter.CTkFrame(master = self)
+        self.success.grid(row=1, column=0, columnspan=4, rowspan=4, pady=20, padx=20, sticky="nswe")
+
+        self.instructions = customtkinter.CTkFrame(master = self.success)
+        self.instructions.grid(row=1, column=0, columnspan=7, pady=20, padx=20, sticky="nswe")
+
+        self.instruction = customtkinter.CTkLabel(master = self.instructions,
+                                                    text = "Success! Look for a file called 'program.txt' where you will find your new routine. Enjoy your newfound progress!")
+        self.instruction.grid(row = 0, column = 4, columnspan = 7, pady = 10, sticky = "nswe")
 
     def change_mode(self):
         if self.darkmodeswitch.get() == 1:

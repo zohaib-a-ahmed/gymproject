@@ -217,7 +217,7 @@ class App(customtkinter.CTk):
        self.endingmessage.grid(column = 0, row = 7, padx = 10, pady = 10, sticky = "nswe")
  
        # submit option
-       self.submit = customtkinter.CTkButton(master = self.ending, text = "Continue", command = self.create_workout) # create command
+       self.submit = customtkinter.CTkButton(master = self.ending, text = "Generate", command = self.create_workout) # create command
        self.submit.grid(row = 7, column = 7, padx = 10, pady = 10, sticky = "nswe")
  
    def create_workout(self):

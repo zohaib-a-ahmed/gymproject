@@ -12,9 +12,9 @@ This project is currently in development. Users can input general data and recie
 
 #### Example:   
 
-[ PRETEND SCREEN SHOT IS HERE ]
+![First Input Page for Program](/gymproject/screenshots/P.P.1.png "First Input Page").
 
-[ PRETEND OTHER SCREEN SHOT IS HERE ]
+![Second Input Page for Program](/gymproject/screenshots/P.P.2.png "Second Input Page").
 
 ## Installation and Use
 

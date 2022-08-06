@@ -8,9 +8,7 @@ Desktop application designed to input a user's lifestyle characteristics along w
 
 This project is currently in development. Users can input general data and recieve an output text file detailing simple workout routines designed to match their individuals. A simpler/cleaner functionality for program output is still in progress.
 
-## Project Screen Shot(s)
-
-#### Example:   
+## Images
 
 ![First Input Page for Program](/gymproject/screenshots/P.P.1.png "First Input Page").
 

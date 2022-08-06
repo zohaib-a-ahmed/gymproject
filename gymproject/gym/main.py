@@ -229,7 +229,10 @@ class App(customtkinter.CTk):
        targets = [self.arms.get(), self.chest.get(), self.shoulders.get(), self.back.get(), self.glutes.get(), self.legs.get()]
       
        # Create workout routine file
-       workout = Program(int(self.age_entry.get()), self.gender.get(), days, time, targets, self.radio_var.get())
+       try:
+        workout = Program(int(self.age_entry.get()), self.gender.get(), days, time, targets, self.radio_var.get())
+       except(ValueError):
+        workout = Program(20, self.gender.get(), days, time, targets, self.radio_var.get())
  
    def success_screen(self):
        self.info2.forget() # forget previous screen

@@ -6,13 +6,11 @@ Push Day ---------------------
     
 Bench Press | 4x10/8/6/4
 Incline Dumbbell Press | 4x8
-Chest Focused Dips | 3xTo-Failure
 Dumbbell Lateral Raises | 4x12
 Tricep Overhead Extensions | 3x12
 Tricep Rope Pushdowns | 3x10
 Single Arm Bent-Over Tricep Extensions | 3x10
-Skullcrusher Tricep Extensions | 3x12
-Cardio: 20 minutes of incline treadmill walking
+Cardio:  
         
 Pull Day ---------------------
      
@@ -22,8 +20,7 @@ Pull Ups | 3xTo-Failure
 Hammer Curls | 3x10
 EZ Bar Curls | 3x10
 Cable Bar Curls | 3x12
-Preacher Curl Machine | 3x10
-Cardio:  20 minutes of incline treadmill walking
+Cardio:   
           
 Leg Day ----------------------
       

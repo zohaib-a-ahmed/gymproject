@@ -1,8 +1,8 @@
-## Novice Bodybuilding Program Generator
+## Progress Pal
 
 #### Description:
 
-Desktop application designed to input a user's lifestyle characteristics along with their goals to create a personalized approach to bodybuilding. Aimed to be for beginners of all ages.
+Novice Bodybuilding Program Generator. Desktop application designed to input a user's lifestyle characteristics along with their goals to create a personalized approach to bodybuilding. Aimed to be for beginners of all ages.
 
 ## Project Status
 
